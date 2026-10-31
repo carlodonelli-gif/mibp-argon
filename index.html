@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Progetto M.I.B.P. | Materiale Ibrido Bio-Sintetico Fotosintetico</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #07090e;
+            --surface: #0e1320;
+            --surface-border: #1a233a;
+            --accent: #10b981;
+            --accent-glow: rgba(16, 185, 129, 0.15);
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(var(--surface-border) 1px, transparent 1px),
+                              linear-gradient(90deg, var(--surface-border) 1px, transparent 1px);
+            background-size: 50px 50px;
+            opacity: 0.15;
+            z-index: -1;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem 5%;
+            border-bottom: 1px solid var(--surface-border);
+            background: rgba(7, 9, 14, 0.85);
+            backdrop-filter: blur(12px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--accent);
+            letter-spacing: 1.5px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--accent);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--accent);
+        }
+
+        .nav-status {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            border: 1px solid var(--surface-border);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            background: var(--surface);
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 8rem 1.5rem 4rem;
+            position: relative;
+            background: radial-gradient(circle at 50% 25%, var(--accent-glow) 0%, transparent 65%);
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            background: var(--surface);
+            color: var(--accent);
+            padding: 0.4rem 1.2rem;
+            border-radius: 50px;
+            border: 1px solid var(--surface-border);
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5.5vw, 4.5rem);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.03em;
+            line-height: 1.15;
+            max-width: 900px;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(135deg, var(--accent) 0%, #34d399 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+            color: var(--text-muted);
+            max-width: 750px;
+            margin-bottom: 3rem;
+        }
+
+        .container {
+            max-width: 1150px;
+            margin: 0 auto;
+            padding: 6rem 2rem;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .section-header p {
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+            font-size: 1.05rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--surface-border);
+            padding: 3rem 2.5rem;
+            border-radius: 16px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(16, 185, 129, 0.4);
+            box-shadow: 0 12px 40px -10px rgba(0, 0, 0, 0.5);
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card-icon {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--accent);
+            background: rgba(16, 185, 129, 0.1);
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            display: inline-block;
+            margin-bottom: 1.5rem;
+        }
+
+        .card h3 {
+            font-size: 1.35rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-main);
+        }
+
+        .card p {
+            color: var(--text-muted);
+            font-size: 0.975rem;
+            line-height: 1.6;
+        }
+
+        .vision-box {
+            background: linear-gradient(145deg, var(--surface), #0a0f1d);
+            border: 1px solid var(--surface-border);
+            border-radius: 20px;
+            padding: 4rem 3rem;
+            margin-top: 4rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .vision-content h3 {
+            font-size: 1.75rem;
+            margin-bottom: 1.25rem;
+            letter-spacing: -0.02em;
+        }
+
+        .vision-content p {
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        .specs-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .specs-list li {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            color: var(--text-main);
+        }
+
+        .specs-list li::before {
+            content: '>';
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+        footer {
+            text-align: center;
+            padding: 4rem 2rem;
+            border-top: 1px solid var(--surface-border);
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-family: 'JetBrains Mono', monospace;
+            background: var(--surface);
+        }
+
+        @media (max-width: 900px) {
+            .vision-box {
+                grid-template-columns: 1fr;
+                padding: 2.5rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">
+            <div class="logo-dot"></div>
+            M.I.B.P.
+        </div>
+        <div class="nav-status">STATUS: R&amp;D ACTIVE</div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="badge">
+                <span>Materiale Ibrido Bio-Sintetico Fotosintetico</span>
+            </div>
+            <h1>Ingegneria dei Materiali al servizio della <span>Biosfera Avanzata</span></h1>
+            <p>Un'architettura di frontiera che fonde matrici polimeriche riciclate e proprietà metaboliche fotosintetiche per una nuova classe di materiali attivi.</p>
+        </section>
+
+        <section class="container">
+            <div class="section-header">
+                <h2>Presentazione Video del Progetto</h2>
+                <p>Una panoramica visiva sull'innovazione dei materiali bio-sintetici e fotosintetici.</p>
+            </div>
+            
+            <div class="card" style="padding: 1.5rem; text-align: center;">
+                <!-- Sostituisci "video-mibp.mp4" con il nome reale del file video caricato -->
+                <video controls width="100%" style="border-radius: 8px; max-height: 500px;" preload="metadata">
+                    <source src="video-mibp.mp4#t=0,132" type="video/mp4">
+                    Il tuo browser non supporta il tag video.
+                </video>
+                <p style="margin-top: 1rem; color: var(--text-muted); font-size: 0.9rem; font-family: 'JetBrains Mono', monospace;">
+                    Durata ottimizzata: 2:12 min.
+                </p>
+            </div>
+        </section>
+
+        <section class="container" style="padding-top: 0;">
+            <div class="section-header">
+                <h2>Pilastri Tecnologici</h2>
+                <p>I fondamenti sistemici e applicativi della piattaforma di ricerca M.I.B.P.</p>
+            </div>
+            
+            <div class="grid">
+                <div class="card">
+                    <span class="card-icon">01 // MATRICE</span>
+                    <h3>Integrazione Biologica</h3>
+                    <p>Sfruttamento mirato delle capacità metaboliche e fotosintetiche di organismi specializzati all'interno di scaffold strutturali avanzati.</p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">02 // ECONOMIA</span>
+                    <h3>Economia Circolare</h3>
+                    <p>Rivalorizzazione industriale di matrici plastiche riciclate di origine marina come scheletro strutturale ibrido ad alta resistenza.</p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">03 // APPLICAZIONI</span>
+                    <h3>Mitigazione &amp; Ossigenazione</h3>
+                    <p>Sviluppo di componenti attivi orientati alla produzione controllata di ossigeno e al riequilibrio ambientale ad alta efficienza.</p>
+                </div>
+            </div>
+
+            <div class="vision-box">
+                <div class="vision-content">
